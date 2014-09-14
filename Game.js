@@ -1,31 +1,62 @@
-Dash.Game = function(game) {};
+Dash.Game = function (game) {
+    this.player = null;
+    this.block = null;
+    this.spawn = null;
+    this.antiBlock = null;
+    this.qntAnti = 0;
+    this.receber = null;
+    this.rand = null;
+    this.i = null;
+    this.testKey = 0;
+    this.testBlock = 0;
+    this.leftKey = null;
+    this.rightKey = null;
+    this.downKey = null;
+    this.antiBlockSpawn = null;
+    this.blockSpawn = null;
+    
+};
 
 Dash.Game.prototype = {
     
-    create: function() {
-        //var creation
-        var player;var block;var spawn;var antiBlock;var qntAnti = 0;var receber;var alea;var i;var testKey = 0;var testBlock = 0;var leftKey;var rightKey;var downKey;
+    create: function () {
         
-        this.stage.backgroundColor = '#fff';
         player = this.add.sprite(200, 300, 'player');
         block = this.add.group();
-        spawn = this.add.sprite(700,325, 'spawn');
+        spawn = this.add.sprite(700, 325, 'spawn');
         antiBlock = this.add.group();
 
         leftKey = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        rightKey = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-        downKey = this.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        //leftKey.onDown
+       // rightKey = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        //this.leftKey.onDown
+        
+       // downKey = this.input.keyboard.addKey(Phaser.Keyboard.DOWN);
         
     },
     
+    createBlock: function (rand) {
+	
+        switch(rand){
+                case 0:
+                    this.antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
+                    break;
+                case 1:
+                    this.blockSpawn = block.create(spawn.x, 325, 'block');
+                    break;
+                default:
+                    this.antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
+        }
+    },
+    
     update: function() {
-            if (leftKey.isDown) {
+        if (leftKey.isDown) {
 
-            testKey = testKey +1;
+            testKey = testKey+1;
 
                 if(testKey == 1) {
-
-                    rand =  game.rnd.integerInRange(0, 1);
+                    qntAnti = this.qntAnti;
+                    rand =  this.rnd.integerInRange(0, 1);
                     qntAnti = qntAnti + rand;
                     createBlock(rand);
 
@@ -39,7 +70,7 @@ Dash.Game.prototype = {
 
                         }
 
-                    rand =  game.rnd.integerInRange(0, 1);
+                    rand =  this.rnd.integerInRange(0, 1);
                     qntAnti = qntAnti + rand;
                     createBlock(rand);
 
@@ -66,24 +97,23 @@ Dash.Game.prototype = {
         }
 
     }
-    function createBlock(rand) {
+};
+function createBlock(rand) {
 	
-        if(rand == 0||rand == null){
-
-            var blockSpawn = block.create(spawn.x, 325, 'block');
-
-            }
-
-        if(rand == 1){
-
-            var antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
-
-            }
+    switch(rand){
+            case 0:
+                antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
+                break;
+            case 1:
+                blockSpawn = block.create(spawn.x, 325, 'block');
+                break;
+            default:
+                antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
     }
+};
 
-    function createOne() {
+function createOne() {
 
-        var blockOne = block.create(spawn.x,325, 'block');
+    var blockOne = block.create(spawn.x,325, 'block');
 
-    }
 };
