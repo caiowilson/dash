@@ -20,7 +20,7 @@ Dash.Boot.prototype = {
 		this.scale.setScreenSize(true);  // seta o tamanho da janela mesmo que fodasitudu
  
 		this.input.addPointer();
-		this.stage.backgroundColor = '#f0f0f0';
+		//this.stage.backgroundColor = '#f0f0f0'; não funciona "pq não."
         
         this.state.start('Preloader');
 	}
