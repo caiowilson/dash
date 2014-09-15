@@ -12,7 +12,7 @@
 		body {
 			padding: 0;
 			margin: 0;
-			background-color: #000000;
+			background-color: #f0f0f0;
 		}
 	</style>
 </head>
@@ -20,7 +20,7 @@
     <div id="gameContainer"></div>
     <script type="text/javascript">
         window.onload = function() {
-            var game = new Phaser.Game(540,960,Phaser.AUTO, 'gameContainer');
+            var game = new Phaser.Game(540,960,Phaser.CANVAS, 'gameContainer');
             game.state.add('Boot', Dash.Boot);
             game.state.add('Preloader', Dash.Preloader);
             game.state.add('StartMenu', Dash.StartMenu);

@@ -7,7 +7,7 @@ Dash.StartMenu = function(game) {
 Dash.StartMenu.prototype = {
 	
 	create: function() {
-		this.startBG = this.add.bitmapText(this.world.centerX-118, this.world.centerY-150, 'eightbitwonder', 'DASH', 60);
+        this.startBG = this.add.bitmapText(this.world.centerX-118, this.world.centerY-150, 'eightbitwonder', 'DASH', 60);
 		this.startBG.inputEnabled = true;
 		this.startBG.events.onInputDown.addOnce(this.startGame, this);
 		

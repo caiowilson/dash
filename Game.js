@@ -22,38 +22,24 @@ Dash.Game.prototype = {
     create: function () {
         
         player = this.add.sprite(200, 300, 'player');
+        player.enableBody = true;
         block = this.add.group();
         spawn = this.add.sprite(700, 325, 'spawn');
         antiBlock = this.add.group();
-
-        leftKey = this.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        //leftKey.onDown
-       // rightKey = this.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-        //this.leftKey.onDown
         
-       // downKey = this.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-        
-    },
-    
-    createBlock: function (rand) {
-	
-        switch(rand){
-                case 0:
-                    this.antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
-                    break;
-                case 1:
-                    this.blockSpawn = block.create(spawn.x, 325, 'block');
-                    break;
-                default:
-                    this.antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
-        }
+        //agora, dDash "double dash" é modular, vinculamos ela a qualquer tecla, toque ou clique. idem para as demais.
+        this.dDash = this.input.keyboard.addKey(Phaser.Keyboard.S);
+        this.tDash = this.input.keyboard.addKey(Phaser.Keyboard.D);
+        this.sDash = this.input.keyboard.addKey(Phaser.Keyboard.A);
     },
     
     update: function() {
-        if (leftKey.isDown) {
-
+        this.dash();
+    },
+    
+    dash: function() {
+        if (this.dDash.isDown) {
             testKey = testKey+1;
-
                 if(testKey == 1) {
                     qntAnti = this.qntAnti;
                     rand =  this.rnd.integerInRange(0, 1);
@@ -96,7 +82,22 @@ Dash.Game.prototype = {
             testKey = 0;
         }
 
+    },
+    
+    createBlock: function (rand) {
+	
+        switch(rand){
+                case 0:
+                    this.antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
+                    break;
+                case 1:
+                    this.blockSpawn = block.create(spawn.x, 325, 'block');
+                    break;
+                default:
+                    this.antiBlockSpawn = antiBlock.create(spawn.x, 325,'antiBlock');
+        }
     }
+        
 };
 function createBlock(rand) {
 	
