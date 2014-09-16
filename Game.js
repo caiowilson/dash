@@ -1,25 +1,18 @@
-Dash.Game = function (game) {
-    this.player = null;
-    this.block = null;
-    this.spawn = null;
-    this.antiBlock = null;
-    this.qntAnti = 0;
-    this.receber = null;
-    this.rand = null;
-    this.i = null;
-    this.testKey = 0;
-    this.testBlock = 0;
-    this.leftKey = null;
-    this.rightKey = null;
-    this.downKey = null;
-    this.antiBlockSpawn = null;
-    this.blockSpawn = null;
-    
-};
+Dash.Game = function (game) {};
 
 Dash.Game.prototype = {
     
     create: function () {
+        
+        //player = null;
+       // block = null;
+        //spawn = null;
+        //antiBlock = null;
+        qntAnti = 0;
+        testKey = 0;
+        testBlock = 0;
+        antiBlockSpawn = null;
+        blockSpawn = null;
         
         player = this.add.sprite(200, 300, 'player');
         player.enableBody = true;
@@ -28,58 +21,65 @@ Dash.Game.prototype = {
         antiBlock = this.add.group();
         
         //agora, dDash "double dash" é modular, vinculamos ela a qualquer tecla, toque ou clique. idem para as demais.
-        this.dDash = this.input.keyboard.addKey(Phaser.Keyboard.S);
-        this.tDash = this.input.keyboard.addKey(Phaser.Keyboard.D);
-        this.sDash = this.input.keyboard.addKey(Phaser.Keyboard.A);
+        dDash = this.input.keyboard.addKey(Phaser.Keyboard.S);
+		dDash.onDown.add(this.dash,this);
+		dDash.name = 'doubleDash';
+		 
+        //this.dDash.isDown.add(Dash.Game.prototype.dash(this.dDash), this);
+        //dDash.addCallbacks(this, Dash.Game.prototype.dash(dDash));
+        //tDash = this.input.keyboard.addKey(Phaser.Keyboard.D);
+        //sDash = this.input.keyboard.addKey(Phaser.Keyboard.A);
+        
     },
     
     update: function() {
-        this.dash();
+        //if(dDash.is){this.dash(dDash)};
+        //this.dash();
+		//dDash.onDownCallback = function (e){this.dash(e)};
     },
     
-    dash: function() {
-        if (this.dDash.isDown) {
-            testKey = testKey+1;
-                if(testKey == 1) {
-                    qntAnti = this.qntAnti;
-                    rand =  this.rnd.integerInRange(0, 1);
-                    qntAnti = qntAnti + rand;
-                    createBlock(rand);
+    dash: function(key) {
+        
+        switch(key.name){
+                case 'dDash':
+                	         console.log(key.name);//está recebendo a key.           
+                    if(testKey == 1) {
+                        rand =  Math.floor(Math.random());
+                        qntAnti = qntAnti + rand;
+                        createBlock(this.rand);
 
-                    for(i = 0; i < block.length; i++) {
-                        block.getAt(i).x = block.getAt(i).x - 25;
+                        for(var i = 0; i < block.length; i++) {
+                            block.getAt(i).x = block.getAt(i).x - 25;
 
-                        }
+                            }
+                        for(var i = 0; i < antiBlock.length; i++) {
+                            antiBlock.getAt(i).x = antiBlock.getAt(i).x - 25;
 
-                    for(i = 0; i < antiBlock.length; i++) {
-                        antiBlock.getAt(i).x = antiBlock.getAt(i).x - 25;
+                            }
 
-                        }
+                        rand =  Math.floor(Math.random() * (1 - 0)) + 0;
+                        qntAnti = qntAnti + rand;
+                        createBlock(rand);
 
-                    rand =  this.rnd.integerInRange(0, 1);
-                    qntAnti = qntAnti + rand;
-                    createBlock(rand);
+                        for(var i = 0; i < block.length; i++) {
 
-                    for(i = 0; i < block.length; i++) {
+                            block.getAt(i).x = block.getAt(i).x - 25;
+                            testBlock = 0;	
 
-                        block.getAt(i).x = block.getAt(i).x - 25;
-                        testBlock = 0;	
+                            }
+                        for(var i = 0; i < antiBlock.length; i++) {
 
-                        }
+                            antiBlock.getAt(i).x = antiBlock.getAt(i).x - 25;
+                            testBlock = 0;
 
-                    for(i = 0; i < antiBlock.length; i++) {
+                            }
+                    }	
 
-                        antiBlock.getAt(i).x = antiBlock.getAt(i).x - 25;
-                        testBlock = 0;
-
-                        }
-
-                     }	
-        }
-
-        else {
-
-            testKey = 0;
+                    else {testKey = 0;}
+                    break;
+                default:
+                    testKey = 0;
+                break;
         }
 
     },
