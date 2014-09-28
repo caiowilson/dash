@@ -18,13 +18,21 @@ Dash.Game.prototype = {
         this.antiBlock = this.add.group();
 		        
         //agora, dDash "double dash" é modular, vinculamos ela a qualquer tecla, toque ou clique. idem para as demais.
-        dDash = this.input.keyboard.addKey(Phaser.Keyboard.S);
+        sDash = this.input.keyboard.addKey(Phaser.Keyboard.A);
+		sDash.onDown.add(this.dash,this);
+		sDash.name = 'singleDash';
+		
+		dDash = this.input.keyboard.addKey(Phaser.Keyboard.S);
 		dDash.onDown.add(this.dash,this);
 		dDash.name = 'doubleDash';
 		
 		tDash = this.input.keyboard.addKey(Phaser.Keyboard.D);
 		tDash.onDown.add(this.dash,this);
+		//tDash.onDown.add(this.dash,this);
+		//tDash.onDown.add(this.dash,this); //testar adicionar o evento 3 vezes invés de tratar no metodo
 		tDash.name = 'tripleDash';
+		
+		
 		//this.spawn.
 		//refazer o posicionamento
         spawn = this.add.sprite(this.world.centerX, this.world.centerY-25, 'spawn');
@@ -40,38 +48,34 @@ Dash.Game.prototype = {
     
     dash: function(key) {
         //console.log("Recebendo a key: "+key.name);
-		rand =  Math.round(Math.random());
+		
         switch(key.name){
+				case 'singleDash':
+					rand =  Math.round(Math.random());
+                    this.createBlock(rand);
+                    this.moveBlocks();										
+				break;
+				
                 case 'doubleDash':
+					rand =  Math.round(Math.random());
                     this.createBlock(rand);
                     this.moveBlocks();
+					rand =  Math.round(Math.random());
 					this.createBlock(rand);
 					this.moveBlocks();
                 break;
 				
 				case 'tripleDash':
+					rand =  Math.round(Math.random());
+                    this.createBlock(rand);
+                    this.moveBlocks();
+					rand =  Math.round(Math.random());
 					this.createBlock(rand);
-                    
-					for(var i = 0; i <= this.block.length; i++) {
-                    	this.block.getAt(i).x = this.block.getAt(i).x - 75;
-					}
-					for(var i = 0; i <= this.antiBlock.length; i++) {
-						this.antiBlock.getAt(i).x = this.antiBlock.getAt(i).x - 75;
-					}
-					
+					this.moveBlocks();
+					rand =  Math.round(Math.random());
+                    this.createBlock(rand);
+                    this.moveBlocks();
 				break;
-				
-				case 'singleDash':
-					 this.createBlock(rand);
-                    
-					for(var i = 0; i <= this.block.length; i++) {
-                    	this.block.getAt(i).x = this.block.getAt(i).x - 25;
-					}
-					for(var i = 0; i <= this.antiBlock.length; i++) {
-						this.antiBlock.getAt(i).x = this.antiBlock.getAt(i).x - 25;
-					}
-				break;
-				
                 default:
                 break;
         }
@@ -79,23 +83,21 @@ Dash.Game.prototype = {
     },
     
     createBlock: function (rand) {
-		//console.log("dentro do createblock com rand = "+rand);
+		
         switch(rand){
                 case 0:
 					qntAnti++;
-					if(qntAnti < 3){
+					if(qntAnti <= 2){
                     	this.antiBlockSpawn = this.antiBlock.create(this.world.width+25, this.world.centerY,'antiBlock');
+						break;
 					}
 					else {
-						this.antiBlockSpawn = this.antiBlock.create(this.world.width+25, this.world.centerY,'antiBlock');
 						qntAnti = 0;
 					}
-					break;
+					
                 case 1:
                     this.blockSpawn = this.block.create(this.world.width+25, this.world.centerY, 'block');
 					qntAnti = 0	;
-                    break;
-                default:
                     break;
         }
     },
