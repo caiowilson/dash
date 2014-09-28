@@ -20,12 +20,14 @@
     <div id="gameContainer"></div>
     <script type="text/javascript">
         window.onload = function() {
-            var game = new Phaser.Game(550,960,Phaser.CANVAS, 'gameContainer');
+            var game = new Phaser.Game(550,960,Phaser.AUTO, 'gameContainer');
+			
             game.state.add('Boot', Dash.Boot);
             game.state.add('Preloader', Dash.Preloader);
             game.state.add('StartMenu', Dash.StartMenu);
             game.state.add('Game', Dash.Game);
             game.state.start('Boot');
+			game.stage.setBackgroundColor('#ffffff');
         }
     </script>
 </body>

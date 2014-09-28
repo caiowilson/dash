@@ -9,6 +9,7 @@ Dash.Preloader.prototype = {
 	preload: function () {
         //game stuff
         //this.load.image('player', 'images/player.png'); não tá usando, não saquei...
+		
         this.load.image('block', 'images/bloco.png');
         this.load.image('spawn', 'images/spawn.png');
         this.load.image('antiBlock', 'images/antiBloco.png');	
