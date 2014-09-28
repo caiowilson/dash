@@ -12,10 +12,8 @@ Dash.Game.prototype = {
         testBlock = 0;
        	antiBlockSpawn = null;
         blockSpawn = null;
-              
-        spawn = this.add.sprite(this.world.centerX, this.world.centerY, 'spawn');
-		spawn.anchor.setTo(0 , 1);
-        
+
+		        
 		this.block = this.add.group();
         this.antiBlock = this.add.group();
 		        
@@ -27,8 +25,12 @@ Dash.Game.prototype = {
 		tDash.onDown.add(this.dash,this);
 		tDash.name = 'tripleDash';
 		//this.spawn.
+		//refazer o posicionamento
+        spawn = this.add.sprite(this.world.centerX, this.world.centerY-25, 'spawn');
+		//this.spawn.anchor.setTo(1 , 1);
+		blockOne = this.block.create(this.world.centerX,this.world.centerY, 'block');//@todo: arrumar a posição dos blocos iniciais.fazer um "floor"
        
-        blockOne = this.block.create(this.world.centerX,this.world.centerY, 'block');//@todo: arrumar a posição dos blocos iniciais.
+        
     },
     
     update: function() {
@@ -71,11 +73,12 @@ Dash.Game.prototype = {
 		//console.log("dentro do createblock com rand = "+rand);
         switch(rand){
                 case 0:
-                    this.antiBlockSpawn = this.antiBlock.create(this.world.width+25, this.world.centerY,'antiBlock');
+                    this.antiBlockSpawn = this.antiBlock.create(250, this.world.centerY,'antiBlock');
 					//this.antiBlockSpawn.anchor.setTo(0 , 0);
                     break;
                 case 1:
                     this.blockSpawn = this.block.create(this.world.width+25, this.world.centerY, 'block');
+					console.log(this.world.width)
                     break;
                 default:
                     break;
