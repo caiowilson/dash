@@ -13,7 +13,7 @@ Dash.Game.prototype = {
        	antiBlockSpawn = null;
         blockSpawn = null;
               
-        spawn = this.add.sprite(this.world.centerX+1, this.world.centerY, 'spawn');
+        spawn = this.add.sprite(this.world.centerX, this.world.centerY, 'spawn');
 		spawn.anchor.setTo(0 , 1);
         
 		this.block = this.add.group();
@@ -28,25 +28,25 @@ Dash.Game.prototype = {
 		tDash.name = 'tripleDash';
 		//this.spawn.
        
-        var blockOne = this.block.create(this.world.centerX+1,this.world.centerY, 'block');//@todo: arrumar a posição dos blocos iniciais.
+        blockOne = this.block.create(this.world.centerX,this.world.centerY, 'block');//@todo: arrumar a posição dos blocos iniciais.
     },
     
     update: function() {
-       if(this.blockSpawn){};
+       //if(this.blockSpawn){};
     },
     
     dash: function(key) {
         //console.log("Recebendo a key: "+key.name);
+		rand =  Math.round(Math.random());
         switch(key.name){
                 case 'doubleDash':
-                    rand =  Math.round(Math.random());
-					qntAnti = qntAnti + rand;
+                    qntAnti = qntAnti + rand;
                     this.createBlock(rand);
                     
-					for(var i = 0; i < this.block.length; i++) {
+					for(var i = 0; i <= this.block.length; i++) {
                     	this.block.getAt(i).x = this.block.getAt(i).x - 25;
 					}
-					for(var i = 0; i < this.antiBlock.length; i++) {
+					for(var i = 0; i <= this.antiBlock.length; i++) {
 						this.antiBlock.getAt(i).x = this.antiBlock.getAt(i).x - 25;
 					}
 
@@ -54,6 +54,8 @@ Dash.Game.prototype = {
                 break;
 				
 				case 'tripleDash':
+					//rand =  Math.round(Math.random());
+					qntAnti = qntAnti + rand;
 				break;
 				
 				case 'singleDash':
@@ -69,11 +71,11 @@ Dash.Game.prototype = {
 		//console.log("dentro do createblock com rand = "+rand);
         switch(rand){
                 case 0:
-                    this.antiBlockSpawn = this.antiBlock.create(this.world.width+1, this.world.centerY,'antiBlock');
+                    this.antiBlockSpawn = this.antiBlock.create(this.world.width+25, this.world.centerY,'antiBlock');
 					//this.antiBlockSpawn.anchor.setTo(0 , 0);
                     break;
                 case 1:
-                    this.blockSpawn = this.block.create(this.world.width+1, this.world.centerY, 'block');
+                    this.blockSpawn = this.block.create(this.world.width+25, this.world.centerY, 'block');
                     break;
                 default:
                     break;
