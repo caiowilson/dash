@@ -8,7 +8,8 @@ Dash.Game.prototype = {
         dtDashes = 0;
        	antiBlockSpawn = null;
         blockSpawn = null;
-		this.stage.backgroundColor = '#f0f0f0';
+		
+		
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 		        
 		this.block = this.add.group();
@@ -17,10 +18,7 @@ Dash.Game.prototype = {
 				
 		
         player = this.add.sprite(this.world.centerX, this.world.centerY-25, 'player');
-		this.physics.arcade.enable(player);
-		player.body.gravity.y = 300;
-    	player.body.collideWorldBounds = true;
-		
+				
 		//blocos iniciais
 		this.blockSpawn = this.block.createMultiple(12,'block',null,true);
 				
@@ -30,11 +28,8 @@ Dash.Game.prototype = {
 			//this.block.getAt(i).body.immovable = true;
 			//console.log(this.block.getAt(i).x);
 		}
-		
-		//this.physics.arcade.enable(this.blockSpawn);
-		//blocks.body.enableBody = true;
-		//blocks.body.immovable = true;
-		//blocks.gravity.y = 300;
+		//this.block.enableBody = true;
+		//this.block.physicsBodyType = Phaser.Physics.ARCADE;
 		
 		//stage color
 		this.stage.backgroundColor = "#ffffff";//em branco para melhor visualisação dos malditos blocos <3
@@ -55,10 +50,20 @@ Dash.Game.prototype = {
     },
     
     update: function() {
-       //if(this.blockSpawn){};
-		//this.physics.arcade.collide(player, this.block);
+		for(var i = 0; i <= this.antiBlock.length; i++) {
+			if(this.antiBlock.getAt(i).x == player.x){
+				console.log("forninho caiu!");
+				this.physics.arcade.enable(player);
+				player.body.gravity.y = 3000;
+    			player.body.collideWorldBounds = true;
+				this.time.events.add(Phaser.Timer.SECOND * 1, this.restartGame, this);
+				//this.state.start('Game');
+			}
+		}
     },
     
+	restartGame: function () {this.state.start('Game');},
+	
     dash: function(key) {
         
         switch(key.name){
