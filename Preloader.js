@@ -11,7 +11,7 @@ Dash.Preloader.prototype = {
         //this.load.image('player', 'images/player.png'); não tá usando, não saquei...
 		
         this.load.image('block', 'images/bloco.png');
-        this.load.image('spawn', 'images/spawn.png');
+        this.load.image('player', 'images/spawn.png');
         this.load.image('antiBlock', 'images/antiBloco.png');	
         //preload bar ;)
 		this.preloadBar = this.add.sprite(this.world.centerX, this.world.centerY, 'preloaderBar');//centrar a barra de preloader
