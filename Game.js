@@ -10,12 +10,17 @@ Dash.Game.prototype = {
        	antiBlockSpawn = null;
         blockSpawn = null;
 		
-		
+		//physics start
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 		        
+		//blocks e antiblocks groups e props.
 		this.block = this.add.group();
+		this.block.checkWorldBounds = true;
+  		this.block.outOfBoundsKill = true;
 		this.antiBlock = this.add.group();
 		this.antiBlock.enableBody = false;
+		this.antiBlock.checkWorldBounds = true;
+  		this.antiBlock.outOfBoundsKill = true;
 				
 		
         player = this.add.sprite(this.world.centerX, this.world.centerY-25, 'player');
@@ -49,17 +54,20 @@ Dash.Game.prototype = {
     },
     
     update: function() {
-		for(var i = 0; i <= this.antiBlock.length; i++) {
+		var i=0;
+		for(i = 0; i <= this.antiBlock.length; i++) {
 			if(this.antiBlock.getAt(i).x == player.x){
-				//console.log("forninho caiu!");
+				
 				this.physics.arcade.enable(player);
-				player.body.gravity.y = 3000;
+				player.body.gravity.y = 300;
     			player.body.collideWorldBounds = true;
 				this.time.events.add(Phaser.Timer.SECOND * 3, this.restartGame, this);
 				sDash.onDown.removeAll();
 				dDash.onDown.removeAll(); 
 				tDash.onDown.removeAll();
-				console.log(Dash.Boot.lastScore);
+				this.fadeOutObj(player);
+				break;//@todo criar mais um state do jogo uma tela com a pontuação e um texto "toque para recomeçar" ou a tela inicial com a ultima pontuação. sei lá.
+				
 			}
 		}
 		this.dashPoints.setText(String(this.dashScore));
@@ -68,11 +76,16 @@ Dash.Game.prototype = {
 	render: function () {
 		//this.game.debug.text(this.game.time.fps || '--', 20, 20, '#000000');
 		
+	},
+    fadeOutObj: function (obj) {
+		//ESTA PORRA FDP DO CATIÇO BELZEBU NAO FUNCIONA
+        obj.alpha = 1;
+        var fader = this.add.tween(obj)
+        fader.to({ alpha: 0 }, 1500);
+		fader.start();
 		
 	},
-    
-	restartGame: function () {this.state.start('Game');},
-	
+	restartGame: function () {alert('Reiniciar o Jogo');this.state.start('Game');},
     dash: function(key) {
         
         switch(key.name){
@@ -114,8 +127,7 @@ Dash.Game.prototype = {
                 break;
         }
 
-    },
-    
+    },    
     createBlock: function (rand) {
 		
         switch(rand){
