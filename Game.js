@@ -4,6 +4,7 @@ Dash.Game.prototype = {
     
     create: function () {
         
+		this.dashScore = 0;
 		qntAnti = 0;
         dtDashes = 0;
        	antiBlockSpawn = null;
@@ -18,18 +19,14 @@ Dash.Game.prototype = {
 				
 		
         player = this.add.sprite(this.world.centerX, this.world.centerY-25, 'player');
-				
+						
 		//blocos iniciais
 		this.blockSpawn = this.block.createMultiple(12,'block',null,true);
 				
 		for(var i = 0; i < this.block.length; i++) {
         	this.block.getAt(i).x = this.world.centerX - 25 + (25*(i+1));
 			this.block.getAt(i).y = this.world.centerY;
-			//this.block.getAt(i).body.immovable = true;
-			//console.log(this.block.getAt(i).x);
 		}
-		//this.block.enableBody = true;
-		//this.block.physicsBodyType = Phaser.Physics.ARCADE;
 		
 		//stage color
 		this.stage.backgroundColor = "#ffffff";//em branco para melhor visualisação dos malditos blocos <3
@@ -46,21 +43,28 @@ Dash.Game.prototype = {
 		tDash = this.input.keyboard.addKey(Phaser.Keyboard.D);
 		tDash.onDown.add(this.dash,this);
 		tDash.name = 'tripleDash';
+		
+		this.dashPoints = this.add.bitmapText(this.world.centerX-118, this.world.centerY-250, 'eightbitwonder', '0', 40);
         
     },
     
     update: function() {
 		for(var i = 0; i <= this.antiBlock.length; i++) {
 			if(this.antiBlock.getAt(i).x == player.x){
-				console.log("forninho caiu!");
+				//console.log("forninho caiu!");
 				this.physics.arcade.enable(player);
 				player.body.gravity.y = 3000;
     			player.body.collideWorldBounds = true;
 				this.time.events.add(Phaser.Timer.SECOND * 1, this.restartGame, this);
-				//this.state.start('Game');
 			}
 		}
+		this.dashPoints.setText(String(this.dashScore));
     },
+	render: function () {
+		this.game.debug.text(this.game.time.fps || '--', 20, 20, '#000000');
+		
+		
+	},
     
 	restartGame: function () {this.state.start('Game');},
 	
@@ -73,6 +77,7 @@ Dash.Game.prototype = {
 						this.createBlock(rand);
 						this.moveBlocks();	
 						dtDashes = 0;
+						this.dashScore+= 3;
 					}
 				break;
 				
@@ -84,6 +89,7 @@ Dash.Game.prototype = {
 					this.createBlock(rand);
 					this.moveBlocks();
 					dtDashes++;
+					this.dashScore+= 1;
                 break;
 				
 				case 'tripleDash':
@@ -97,6 +103,7 @@ Dash.Game.prototype = {
                     this.createBlock(rand);
                     this.moveBlocks();
 					dtDashes++;
+					this.dashScore+= 2;
 				break;
                 default:
                 break;

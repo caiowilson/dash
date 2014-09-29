@@ -9,12 +9,17 @@ Dash.StartMenu.prototype = {
 	create: function() {
         this.startBG = this.add.bitmapText(this.world.centerX-118, this.world.centerY-150, 'eightbitwonder', 'DASH', 60);
 		this.startBG.inputEnabled = true;
-		this.startBG.events.onInputDown.addOnce(this.startGame, this);
 		
-		this.startPrompt = this.add.bitmapText(this.world.centerX-180, this.world.centerY+180, 'eightbitwonder', 'Toque para Jogar!', 24);
+		this.startPrompt = this.add.bitmapText(this.world.centerX-180, this.world.centerY-50, 'eightbitwonder', 'Toque para Jogar!', 24);
+		this.startPrompt.inputEnabled = true;
         
-        this.startInstruct = this.add.bitmapText(this.world.centerX-245, this.world.height-20, 'eightbitwonder', 'MOUSE Esquerdo 2 blk, Direito 3 blk, Meio 1 blk', 12);
-        //startInstruct.bitmapText.tint(0x000000); @todo: não funfou tem que testar com outra bitmapfont ou font mesmo acho que o phaser carrega na versao atual
+        this.startInstruct = this.add.bitmapText(this.world.centerX-100, this.world.height-30, 'eightbitwonder', 'Controles A S D', 14);
+				
+		
+		//on down events pra começar
+		this.startPrompt.events.onInputDown.addOnce(this.startGame, this);
+		this.startBG.events.onInputDown.addOnce(this.startGame, this);
+        //this.startInstruct.bitmapText(0x00FF00); //@todo: não funfou tem que testar com outra bitmapfont ou font mesmo acho que o phaser carrega na versao atual
 	},
 
 	startGame: function(pointer) {

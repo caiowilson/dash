@@ -7,9 +7,7 @@ Dash.Preloader = function (game) {
 Dash.Preloader.prototype = {
 	
 	preload: function () {
-        //game stuff
-        //this.load.image('player', 'images/player.png'); não tá usando, não saquei...
-		
+        //game stuff loading
         this.load.image('block', 'images/bloco.png');
         this.load.image('player', 'images/spawn.png');
         this.load.image('antiBlock', 'images/antiBloco.png');	
@@ -18,7 +16,10 @@ Dash.Preloader.prototype = {
 		this.preloadBar.anchor.setTo(0.5, 0.5);
 		this.load.setPreloadSprite(this.preloadBar);
         //fonte
-		this.load.bitmapFont('eightbitwonder', 'fonts/eightbitwonder.png', 'fonts/eightbitwonder.fnt');//em bitmap, acho que o phaser atual suporta fonte em ttf @todo: chegar se suporta para mudarmos fontes e cores sem refazer o bitmap
+		this.load.bitmapFont('eightbitwonder', 'fonts/eightbitwonder.png', 'fonts/eightbitwonder.fnt');//em bitmap, acho que o phaser atual suporta fonte em ttf @todo: checar se suporta para mudarmos fontes e cores sem refazer o bitmap
+		//adicionando advanced timming pra ver o fps.
+		this.time.advancedTiming = true;
+		
 	},
 
 	create: function () {
