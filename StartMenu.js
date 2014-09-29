@@ -9,7 +9,7 @@ Dash.StartMenu.prototype = {
 	create: function() {
         this.startBG = this.add.bitmapText(this.world.centerX-118, this.world.centerY-150, 'eightbitwonder', 'DASH', 60);
 		this.startBG.inputEnabled = true;
-		
+		this.stage.backgroundColor = "#f0f0f0";
 		this.startPrompt = this.add.bitmapText(this.world.centerX-180, this.world.centerY-50, 'eightbitwonder', 'Toque para Jogar!', 24);
 		this.startPrompt.inputEnabled = true;
         

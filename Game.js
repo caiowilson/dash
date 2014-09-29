@@ -44,7 +44,7 @@ Dash.Game.prototype = {
 		tDash.onDown.add(this.dash,this);
 		tDash.name = 'tripleDash';
 		
-		this.dashPoints = this.add.bitmapText(this.world.centerX-118, this.world.centerY-250, 'eightbitwonder', '0', 40);
+		this.dashPoints = this.add.bitmapText(this.world.centerX, this.world.centerY-100, 'eightbitwonder', '0', 40);
         
     },
     
@@ -55,13 +55,18 @@ Dash.Game.prototype = {
 				this.physics.arcade.enable(player);
 				player.body.gravity.y = 3000;
     			player.body.collideWorldBounds = true;
-				this.time.events.add(Phaser.Timer.SECOND * 1, this.restartGame, this);
+				this.time.events.add(Phaser.Timer.SECOND * 3, this.restartGame, this);
+				sDash.onDown.removeAll();
+				dDash.onDown.removeAll(); 
+				tDash.onDown.removeAll();
+				console.log(Dash.Boot.lastScore);
 			}
 		}
 		this.dashPoints.setText(String(this.dashScore));
+		Dash.Boot.lastScore = this.dashScore;
     },
 	render: function () {
-		this.game.debug.text(this.game.time.fps || '--', 20, 20, '#000000');
+		//this.game.debug.text(this.game.time.fps || '--', 20, 20, '#000000');
 		
 		
 	},

@@ -22,6 +22,7 @@ Dash.Boot.prototype = {
 		this.input.addPointer();
 		   
         this.state.start('Preloader');
+		this.lastScore = 0;
 	}
 	
 };
