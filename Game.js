@@ -4,20 +4,42 @@ Dash.Game.prototype = {
     
     create: function () {
         
-        //player = null;
-       // block = null;
-        //spawn = null;
-        //antiBlock = null;
-        qntAnti = 0;
+		qntAnti = 0;
         dtDashes = 0;
        	antiBlockSpawn = null;
         blockSpawn = null;
 		this.stage.backgroundColor = '#f0f0f0';
+		this.physics.startSystem(Phaser.Physics.ARCADE);
 		        
 		this.block = this.add.group();
-        this.antiBlock = this.add.group();
-		        
-        //agora, dDash "double dash" é modular, vinculamos ela a qualquer tecla, toque ou clique. idem para as demais.
+		this.antiBlock = this.add.group();
+		this.antiBlock.enableBody = false;
+				
+		
+        player = this.add.sprite(this.world.centerX, this.world.centerY-25, 'player');
+		this.physics.arcade.enable(player);
+		player.body.gravity.y = 300;
+    	player.body.collideWorldBounds = true;
+		
+		//blocos iniciais
+		this.blockSpawn = this.block.createMultiple(12,'block',null,true);
+				
+		for(var i = 0; i < this.block.length; i++) {
+        	this.block.getAt(i).x = this.world.centerX - 25 + (25*(i+1));
+			this.block.getAt(i).y = this.world.centerY;
+			//this.block.getAt(i).body.immovable = true;
+			//console.log(this.block.getAt(i).x);
+		}
+		
+		//this.physics.arcade.enable(this.blockSpawn);
+		//blocks.body.enableBody = true;
+		//blocks.body.immovable = true;
+		//blocks.gravity.y = 300;
+		
+		//stage color
+		this.stage.backgroundColor = "#ffffff";//em branco para melhor visualisação dos malditos blocos <3
+
+		//Movimentação
         sDash = this.input.keyboard.addKey(Phaser.Keyboard.A);
 		sDash.onDown.add(this.dash,this);
 		sDash.name = 'singleDash';
@@ -29,20 +51,12 @@ Dash.Game.prototype = {
 		tDash = this.input.keyboard.addKey(Phaser.Keyboard.D);
 		tDash.onDown.add(this.dash,this);
 		tDash.name = 'tripleDash';
-		
-        spawn = this.add.sprite(this.world.centerX, this.world.centerY-25, 'spawn');
-		
-		safeZone = this.block.createMultiple(11,'block');
-		for(var i = this.block.length; i <= 0; i--) {
-        	this.block.getAt(i).x = this.block.getAt(i+1).x - 25;
-		}
-		
-		this.stage.backgroundColor = "#ffffff";//em branco para melhor visualisação dos malditos blocos <3
         
     },
     
     update: function() {
        //if(this.blockSpawn){};
+		//this.physics.arcade.collide(player, this.block);
     },
     
     dash: function(key) {
