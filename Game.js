@@ -5,6 +5,7 @@ Dash.Game.prototype = {
     create: function () {
         
 		this.dashScore = 0;
+		this.gameOver = false;
 		qntAnti = 0;
         dtDashes = 0;
        	antiBlockSpawn = null;
@@ -54,9 +55,8 @@ Dash.Game.prototype = {
     },
     
     update: function() {
-		var i=0;
-		for(i = 0; i <= this.antiBlock.length; i++) {
-			if(this.antiBlock.getAt(i).x == player.x){
+		for(var i = 0, ii = this.antiBlock.length; i <= ii; i++) {
+			if(this.antiBlock.getAt(i).x == player.x && !this.gameOver){//@todo fazer um check the overlap, otimizar codigo, olhar pocket e overlap em http://examples.phaser.io/_site/view_full.html?d=arcade%20physics&f=group+vs+group.js&t=group%20vs%20group
 				
 				this.physics.arcade.enable(player);
 				player.body.gravity.y = 300;
@@ -66,6 +66,7 @@ Dash.Game.prototype = {
 				dDash.onDown.removeAll(); 
 				tDash.onDown.removeAll();
 				this.fadeOutObj(player);
+				this.gameOver = true;
 				break;//@todo criar mais um state do jogo uma tela com a pontuação e um texto "toque para recomeçar" ou a tela inicial com a ultima pontuação. sei lá.
 				
 			}
@@ -78,8 +79,7 @@ Dash.Game.prototype = {
 		
 	},
     fadeOutObj: function (obj) {
-		//ESTA PORRA FDP DO CATIÇO BELZEBU NAO FUNCIONA
-        obj.alpha = 1;
+		obj.alpha = 1;
         var fader = this.add.tween(obj)
         fader.to({ alpha: 0 }, 1500);
 		fader.start();
